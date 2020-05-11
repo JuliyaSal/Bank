@@ -1,0 +1,30 @@
+DROP TABLE IF EXISTS users;
+CREATE TABLE users
+(
+    Id SERIAL PRIMARY KEY NOT NULL,
+    Name CHARACTER VARYING(30) NOT NULL CONSTRAINT namechk CHECK (char_length(Name) > 3),
+    Password CHARACTER VARYING(30) NOT NULL,
+	Email VARCHAR(30) NOT NULL UNIQUE CHECK(Email !=''),
+	Status BOOLEAN NOT NULL
+);
+
+
+
+DROP TABLE IF EXISTS accounts;
+CREATE TABLE accounts
+(
+    UserId SERIAL NOT NULL REFERENCES users (Id),
+	AccountNumber CHARACTER VARYING(10) PRIMARY KEY UNIQUE NOT NULL
+	CONSTRAINT AccountNumberLengthCheck CHECK (character_length(AccountNumber) = 10),
+	Balance MONEY NOT NULL DEFAULT 0
+);
+
+DROP TABLE IF EXISTS transactions;
+CREATE TABLE transactions
+(
+	Source CHARACTER VARYING(10) REFERENCES accounts (AccountNumber),
+	Destination CHARACTER VARYING(10) NOT NULL REFERENCES accounts (AccountNumber),
+	Amount MONEY NOT NULL,
+	TransactionDate TIMESTAMP NOT NULL,
+	Type CHARACTER VARYING(20)
+);

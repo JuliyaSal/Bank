@@ -7,13 +7,13 @@ namespace WebApplication1.Models
 {
     public class Transaction
     {
-        public int Source { get; set; }
+        public string Source { get; set; }
 
         public string Destination { get; set; }
 
-        public string Amount { get; set; }
+        public int Amount { get; set; }
 
-        public string TransactionDate { get; set; }
+        public DateTime TransactionDate { get; set; }
 
     }
 }
